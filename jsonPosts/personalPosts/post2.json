@@ -1,0 +1,30 @@
+{
+  "id": 1,
+  "title": "My First personal Post",
+  "author": "John Doe",
+  "date": "2024-04-26",
+  "content": [
+    {
+      "type": "paragraph",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi."
+    },
+    {
+      "type": "image",
+      "src": "image1.jpg",
+      "caption": "Image 1 caption"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vestibulum quis magna vitae magna."
+    },
+    {
+      "type": "image",
+      "src": "image2.jpg",
+      "caption": "Image 2 caption"
+    },
+    {
+      "type": "paragraph",
+      "text": "Aliquam in lorem sit amet leo accumsan lacinia. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae."
+    }
+  ]
+}
