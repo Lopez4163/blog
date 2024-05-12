@@ -2,6 +2,7 @@
 const express = require("express")
 const postRouter = express.Router()
 const db = require("../db/index.cjs")
+const mysql = require("mysql2/promise")
 
 // GET all posts
 postRouter.get("/", async (req, res) => {
@@ -12,7 +13,6 @@ postRouter.get("/", async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 })
-
 // GET post by ID
 postRouter.get("/:id", async (req, res) => {
   try {
@@ -24,20 +24,22 @@ postRouter.get("/:id", async (req, res) => {
 })
 
 // POST create new post
-postRouter.post("/", async (req, res) => {
+postRouter.post("/create-post", async (req, res) => {
+  const { jsonContent, blogType } = req.body
   try {
-    const { title, content } = req.body
-    await db.createPost(title, content)
-    res.status(201).json({ message: "Post created successfully" })
-  } catch (err) {
-    res.status(500).json({ error: err.message })
+    await db.addPost(jsonContent, blogType)
+    console.log("JSON content inserted into database successfully.")
+    res.status(200).send("JSON content inserted into database successfully.")
+  } catch (error) {
+    console.error("Error inserting JSON content into database:", error)
+    res.status(500).send("Error inserting JSON content into database.")
   }
 })
 
 // PUT update post by ID
 postRouter.put("/:id", async (req, res) => {
   try {
-    const { title, content } = req.body
+    const { json_content } = req.body
     await db.updatePost(req.params.id, title, content)
     res.json({ message: "Post updated successfully" })
   } catch (err) {

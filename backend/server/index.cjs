@@ -26,22 +26,6 @@ app.use((req, res, next) => {
 app.use("/post", postRouter) // Mount all routes under the /post prefix
 app.use("/auth", authRouter) // Mount all routes under the /auth prefix
 
-// API endpoint to create JSON file
-app.post("/create-json", (req, res) => {
-  const { jsonContent } = req.body
-  console.log(jsonContent)
-  const filePath = path.join(__dirname, "../../jsonPosts", "json-post.json")
-
-  try {
-    // Write JSON content to file
-    fs.writeFileSync(filePath, JSON.stringify(jsonContent, null, 2))
-    res.status(200).send("JSON file created successfully.")
-  } catch (error) {
-    console.error("Error creating JSON file:", error)
-    res.status(500).send("Error creating JSON file.")
-  }
-})
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)

@@ -2,7 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        textBlockHeight: "25rem",
+      },
+      width: {
+        textBlockWidth: "40rem",
+      },
+    },
   },
   plugins: [],
 }

@@ -11,11 +11,11 @@ async function seedPosts() {
 
     // Create the posts table
     await db.pool.query(`
-      CREATE TABLE posts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        content TEXT NOT NULL
-      );
+    CREATE TABLE posts (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      posts JSON,
+      type TEXT NOT NULL
+    );
     `)
     console.log("Posts table created successfully.")
 
@@ -30,14 +30,14 @@ async function seedPosts() {
     console.log("Users table created successfully.")
 
     // Insert sample data into posts table
-    await db.pool.query(`
-      INSERT INTO posts (title, content) VALUES
-      ('First Post', 'This is the content of the first post.'),
-      ('Second Post', 'This is the content of the second post.'),
-      ('Third Post', 'This is the content of the third post.'),
-      ('Fourth Post', 'This is the content of the fourth post.'),
-      ('Fifth Post', 'This is the content of the fifth post.');
-    `)
+    // await db.pool.query(`
+    //   INSERT INTO posts (title, content) VALUES
+    //   ('First Post', 'This is the content of the first post.'),
+    //   ('Second Post', 'This is the content of the second post.'),
+    //   ('Third Post', 'This is the content of the third post.'),
+    //   ('Fourth Post', 'This is the content of the fourth post.'),
+    //   ('Fifth Post', 'This is the content of the fifth post.');
+    // `)
     console.log("Sample posts inserted successfully.")
 
     // Insert sample data into users table
