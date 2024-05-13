@@ -1,5 +1,6 @@
 // seed.js
 const db = require("../db/index.cjs")
+const seedData = require("./seedData.cjs")
 
 // Function to seed the posts and users tables
 async function seedPosts() {
@@ -29,23 +30,21 @@ async function seedPosts() {
     `)
     console.log("Users table created successfully.")
 
-    // Insert sample data into posts table
-    // await db.pool.query(`
-    //   INSERT INTO posts (title, content) VALUES
-    //   ('First Post', 'This is the content of the first post.'),
-    //   ('Second Post', 'This is the content of the second post.'),
-    //   ('Third Post', 'This is the content of the third post.'),
-    //   ('Fourth Post', 'This is the content of the fourth post.'),
-    //   ('Fifth Post', 'This is the content of the fifth post.');
-    // `)
+    for (const blog of seedData) {
+      const postsJson = JSON.stringify(blog.posts)
+      const type = blog.type
+      await db.pool.query(
+        `
+        INSERT INTO posts (posts, type)
+        VALUES (?, ?);
+        `,
+        [postsJson, type]
+      )
+    }
     console.log("Sample posts inserted successfully.")
 
-    // Insert sample data into users table
-    await db.pool.query(`
-      INSERT INTO users (username, password) VALUES
-      ('user', '123');
-    `)
-    console.log("User inserted successfully.")
+    await db.pool.end()
+    console.log("Disconnected from the database.")
   } catch (err) {
     console.error("Error seeding tables:", err)
   }

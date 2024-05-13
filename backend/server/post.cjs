@@ -36,6 +36,17 @@ postRouter.post("/create-post", async (req, res) => {
   }
 })
 
+postRouter.post("/getBlog", async (req, res) => {
+  try {
+    await db.addPost(jsonContent, blogType)
+    console.log("JSON content inserted into database successfully.")
+    res.status(200).send("JSON content inserted into database successfully.")
+  } catch (error) {
+    console.error("Error inserting JSON content into database:", error)
+    res.status(500).send("Error inserting JSON content into database.")
+  }
+})
+
 // PUT update post by ID
 postRouter.put("/:id", async (req, res) => {
   try {

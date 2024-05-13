@@ -8,9 +8,37 @@ const PostCreatorView = ({
 }) => {
   const [editModeJsonContainer, setEditModeJsonContainer] = useState([])
 
+  useEffect(() => {
+    // Save a copy of jsonContainer when entering edit mode
+    if (editMode) {
+      setEditModeJsonContainer([...jsonContainer])
+    }
+  }, [editMode, jsonContainer])
+
+  // Function to handle saving changes
   const handleSave = () => {
-    setJsonContainer(editModeJsonContainer)
-    setEditMode(prevEditMode => !prevEditMode)
+    // Check if any changes were made during edit mode
+    const changesMade = jsonContainer.some((item, index) => {
+      return item.value !== editModeJsonContainer[index].value
+    })
+
+    if (!changesMade) {
+      // No changes were made, revert back to the original copy
+      setJsonContainer([...editModeJsonContainer])
+    } else {
+      // Remove empty strings before saving
+      const nonEmptyJsonContainer = jsonContainer
+        .map(item => {
+          return { ...item, value: item.value.trim() }
+        })
+        .filter(item => item.value !== "")
+
+      // Update the jsonContainer state with non-empty values
+      setJsonContainer(nonEmptyJsonContainer)
+    }
+
+    // Turn off edit mode
+    setEditMode(false)
   }
 
   return (
@@ -18,7 +46,7 @@ const PostCreatorView = ({
       {editMode && (
         <button
           onClick={handleSave}
-          className="bg-transparent hover:bg-gray-500 text-white-700 font-semibold hover:text-white py-2 px-4  border border-white-500 hover:border-transparent rounded"
+          className="bg-transparent hover:bg-gray-500 text-white-700 font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded"
         >
           SAVE
         </button>
@@ -32,10 +60,21 @@ const PostCreatorView = ({
                 value={item.value}
                 onChange={e => {
                   const updatedJsonContainer = [...jsonContainer]
-                  updatedJsonContainer[index].value = e.target.value
-                  setEditModeJsonContainer(updatedJsonContainer)
+                  const newValue = e.target.value
+                  updatedJsonContainer[index] = { ...item, value: newValue }
+                  setJsonContainer(updatedJsonContainer)
                 }}
               />
+              <button
+                className="bg-transparent hover:bg-gray-500 text-white-700 font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded"
+                onClick={() => {
+                  const updatedJsonContainer = [...jsonContainer]
+                  updatedJsonContainer.splice(index, 1)
+                  setJsonContainer(updatedJsonContainer)
+                }}
+              >
+                Delete
+              </button>
             </>
           ) : (
             <>
