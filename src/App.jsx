@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import CodingPost from "./components/CodingPost"
 import PersonalPost from "./components/PersonalPost"
-import PersonalPage from "./pages/PersonalPage"
 import PostCreator from "./pages/PostCreator"
 import CodingBlog from "./pages/CodingBlog"
+import PersonalBlog from "./pages/PersonalBlog"
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/coding-blog" element={<CodingBlog />} />
-        <Route path="/personal-blog" element={<PersonalPage />} />
+        <Route path="/personal-blog" element={<PersonalBlog />} />
         <Route path="/blog-post-coding/:postId" element={<CodingPost />} />
         <Route path="/blog-post-personal/:postId" element={<PersonalPost />} />
         <Route path="/create-post" element={<PostCreator />} />
